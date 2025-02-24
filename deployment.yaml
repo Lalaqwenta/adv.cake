@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adv-cake
+spec:
+  selector:
+    matchLabels:
+      app: adv-cake
+  template:
+    metadata:
+      labels:
+        app: adv-cake
+    spec:
+      containers:
+        - name: python-app
+          image: docker.adv-cake.com/python-app:current
+          envFrom:
+            - configMapRef:
+                name: adv-cake-cm
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adv-cake-cm
+data:
+  configPath: /app/config.json
